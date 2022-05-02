@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using EcsDemo.Desktop.Components;
+using EcsDemo.Desktop.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Entities;
 
@@ -20,7 +22,13 @@ namespace EcsDemo.Desktop
         protected override void LoadContent()
         {
             _world = new WorldBuilder()
+                .AddSystem(new RenderSystem(GraphicsDevice))
                 .Build();
+
+            var ball = _world.CreateEntity();
+            ball.Attach(new PositionComponent { Position = Vector2.Zero });
+            ball.Attach(new RenderableComponent { Color = Color.Blue });
+            ball.Attach(new SpatialComponent { Width = 10, Height = 10});
         }
 
         protected override void Update(GameTime gameTime)
