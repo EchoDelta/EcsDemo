@@ -24,6 +24,7 @@ namespace EcsDemo.Desktop
             _world = new WorldBuilder()
                 .AddSystem(new RenderSystem(GraphicsDevice))
                 .AddSystem(new BallBounceSystem())
+                .AddSystem(new BreakSystem())
                 .AddSystem(new MovementSystem())
                 .AddSystem(new EdgeBounceSystem(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight))
                 .Build();
@@ -41,6 +42,7 @@ namespace EcsDemo.Desktop
                 brick.Attach(new PositionComponent { Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 10 * i) });
                 brick.Attach(new RenderableComponent { Color = Color.Red });
                 brick.Attach(new SpatialComponent { Width = 40, Height = 20 });
+                brick.Attach(new BreakableComponent());
             }
         }
 

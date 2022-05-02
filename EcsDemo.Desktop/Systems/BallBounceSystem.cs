@@ -15,6 +15,7 @@ namespace EcsDemo.Desktop.Systems
         private ComponentMapper<PositionComponent> _postitionMapper;
         private ComponentMapper<SpatialComponent> _spatialMapper;
         private ComponentMapper<CollidableComponent> _collidableMapper;
+        private ComponentMapper<BreakableComponent> _breakableMapper;
 
         private readonly Dictionary<int, RectangleF> _collidables = new Dictionary<int, RectangleF>();
 
@@ -28,6 +29,7 @@ namespace EcsDemo.Desktop.Systems
             _postitionMapper = mapperService.GetMapper<PositionComponent>();
             _spatialMapper = mapperService.GetMapper<SpatialComponent>();
             _collidableMapper = mapperService.GetMapper<CollidableComponent>();
+            _breakableMapper = mapperService.GetMapper<BreakableComponent>();
         }
 
         public override void Process(GameTime gameTime, int entityId)
@@ -48,6 +50,13 @@ namespace EcsDemo.Desktop.Systems
                     ballPosition.Position += ballVelocity.Velocity * gameTime.GetElapsedSeconds() * entrytime;
                     ballVelocity.Velocity = ballVelocity.Velocity.Deflect(normal);
                     ballPosition.Position -= ballVelocity.Velocity * gameTime.GetElapsedSeconds() * (1-entrytime);
+
+                    // Break
+                    var breakable = _breakableMapper.Get(collidableEnityId);
+                    if (breakable != null)
+                    {
+                        breakable.IsBroken = true;
+                    }
                 }
             }
         }
