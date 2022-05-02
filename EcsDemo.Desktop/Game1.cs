@@ -24,6 +24,7 @@ namespace EcsDemo.Desktop
             _world = new WorldBuilder()
                 .AddSystem(new RenderSystem(GraphicsDevice))
                 .AddSystem(new MovementSystem())
+                .AddSystem(new EdgeBounceSystem(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight))
                 .Build();
 
             var ball = _world.CreateEntity();
