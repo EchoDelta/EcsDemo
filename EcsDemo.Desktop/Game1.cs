@@ -18,17 +18,19 @@ namespace EcsDemo.Desktop
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-        
+
         protected override void LoadContent()
         {
             _world = new WorldBuilder()
                 .AddSystem(new RenderSystem(GraphicsDevice))
+                .AddSystem(new MovementSystem())
                 .Build();
 
             var ball = _world.CreateEntity();
             ball.Attach(new PositionComponent { Position = Vector2.Zero });
             ball.Attach(new RenderableComponent { Color = Color.Blue });
-            ball.Attach(new SpatialComponent { Width = 10, Height = 10});
+            ball.Attach(new SpatialComponent { Width = 10, Height = 10 });
+            ball.Attach(new VelocityComponent { Velocity = new Vector2(100, 100) });
         }
 
         protected override void Update(GameTime gameTime)
