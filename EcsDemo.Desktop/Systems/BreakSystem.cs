@@ -21,7 +21,7 @@ namespace EcsDemo.Desktop.Systems
         public override void Process(GameTime gameTime, int entityId)
         {
             var breakable = _breakableMapper.Get(entityId);
-            if (breakable.IsBroken)
+            if (breakable.Health <= 0)
             {
                 DestroyEntity(entityId);
             }

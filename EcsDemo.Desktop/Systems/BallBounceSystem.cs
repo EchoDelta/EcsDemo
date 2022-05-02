@@ -55,7 +55,7 @@ namespace EcsDemo.Desktop.Systems
                     var breakable = _breakableMapper.Get(collidableEnityId);
                     if (breakable != null)
                     {
-                        breakable.IsBroken = true;
+                        breakable.Health--;
                     }
                 }
             }

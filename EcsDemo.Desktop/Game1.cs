@@ -22,6 +22,7 @@ namespace EcsDemo.Desktop
         protected override void LoadContent()
         {
             _world = new WorldBuilder()
+                .AddSystem(new BrickColorSystem())
                 .AddSystem(new RenderSystem(GraphicsDevice))
                 .AddSystem(new BallBounceSystem())
                 .AddSystem(new BreakSystem())
@@ -37,12 +38,16 @@ namespace EcsDemo.Desktop
 
             for (var i = 0; i < 10; i++)
             {
+                var shouldBreak = i % 2 == 0;
                 var brick = _world.CreateEntity();
                 brick.Attach(new CollidableComponent());
                 brick.Attach(new PositionComponent { Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 10 * i) });
-                brick.Attach(new RenderableComponent { Color = Color.Red });
+                brick.Attach(new RenderableComponent());
                 brick.Attach(new SpatialComponent { Width = 40, Height = 20 });
-                brick.Attach(new BreakableComponent());
+                if (shouldBreak)
+                {
+                    brick.Attach(new BreakableComponent());
+                }
             }
         }
 
